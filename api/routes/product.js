@@ -6,21 +6,23 @@ const Joi = require("join");
 
 
 product.post("/:id", async (req, res) => {
-    const id = req.params;
     const { name, price, description, category } = req.body;
+    const id = req.params;
+
     const { error } = Joi.object({
         name: Joi.string().required().max(50),
         price: Joi.string().email().required(),
         description: Joi.string().required(),
     category: Joi.string().require()
     }).validate(req.body);
-
+    
+    const session = await mongoose.startSession();
     try {
       if (!mongoose.Types.ObjectId.isValid(id)) {
         res.status(400).json({ message: "Id inválido" });
       }
     
-    //utilizar un findOne para verificar si el producto ya está creado  -  IMPORTANTE NO OLVIDAR
+   
 
     Products.create({
         _id,
