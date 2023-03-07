@@ -2,7 +2,7 @@ const express = require("express");
 const user = express.Router(); 
 const User = require("../models/User");
 const mongoose = require("mongoose");
-const mailSettings = require("../additional/nodemailer");
+const mailSettings = require("../additional/Nodemailer");
 
 
 user.post("/", async(req,res)=>{

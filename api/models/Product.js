@@ -1,50 +1,29 @@
 const { Schema, model, models } = require("mongoose");
 
 
-const productsSchema = new Schema({
-    //Combo
-    nameProduct: {
-        type: String,
-        unique: true,
-    },
-    nameDrink: {
-        type: String,
-        unique: true,
-    },
-
-    //Adicionales
-    aditionals: {
-        type: String,
-    },
-    price: {
-        type: Number,
-    },
-    description: {
-        type: String,
-    },
-    image: {
-        type: String,
-    },
-    stock: {
-        type: Number,
-    },
-    promotion: {
-        type: Schema.Types.Mixed,
-        default: {
-            salesOff: false,
-            stock: 0,
-            newPrice: 0,
-            oldPrice: 0,
-        },
-    },
-    isDeleted: { type: Boolean, default: false },
-    // category: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Categories",
-    //     required: true,
-    // },
+const productSchema = new Schema({
+  product_name: {
+    type: String,
+    required: [true, 'El nombre del producto es requerido'],
+    trim: true,
+    maxlength: [
+      20,
+      'El nombre del producto debería ser menor de 20 caracteres',
+    ],
+  },
+  price: { type: Number, required: [true, 'El precio del producto es requerido'] },
+  description: {
+    type: String,
+    trim: true,
+    minlength: [10, 'La descripción debe tener al menos 10 caracteres'],
+  },
+  image: { type: String },
+  stock: { type: Number, required: [true, 'El stock del producto es requerido'] },
+  promotion: { type: Boolean, default: false },
+  isDeleted: { type: Boolean, default: false },
+ 
 },
-{ versionKey: false }
+{ timestamps: true, versionKey: false }
 );
-module.exports = models?.Products || model("Products", productsSchema);
+module.exports = models?.Product || model("Product", productSchema);
  
